@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -36,5 +37,22 @@ public class UserService {
 
     public UserRecord create(UserRecord userRecord){
         return mapper.toRecord(repository.save(mapper.toEntity(userRecord)));
+    }
+
+    public void deleteById(String id){
+        repository.findById(id);
+        repository.deleteById(id);
+    }
+
+    public void update(String id, UserRecord userRecord){
+        User entity = repository.findById(id)
+                .orElseThrow(ObjectNotFoundException::new);
+        dataUpdate(entity,userRecord);
+        repository.save(entity);
+    }
+
+    private void dataUpdate(User entity, UserRecord userRecord){
+        Optional.ofNullable(userRecord.name()).ifPresent(entity::setName);
+        Optional.ofNullable(userRecord.email()).ifPresent(entity::setEmail);
     }
 }

@@ -2,6 +2,7 @@ package com.example.webserviceMongodb.controllers;
 
 import com.example.webserviceMongodb.domain.dto.UserRecord;
 import com.example.webserviceMongodb.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,18 @@ public class UserController {
                         .id())
                 .toUri())
                 .build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id){
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable String id, @RequestBody @Valid UserRecord userRecord){
+        service.update(id,userRecord);
+        return ResponseEntity.noContent().build();
     }
 
 }
