@@ -1,6 +1,6 @@
 package com.example.webserviceMongodb.controllers;
 
-import com.example.webserviceMongodb.domain.User;
+import com.example.webserviceMongodb.domain.dto.UserRecord;
 import com.example.webserviceMongodb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +18,17 @@ public class UserController {
     private UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
+    public ResponseEntity<List<UserRecord>> findAll(){
         return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public User findById(@PathVariable String id){
+    public UserRecord findById(@PathVariable String id){
         return service.findById(id);
     }
 
     @GetMapping("/name/{name}")
-    public User findByName(@PathVariable String name){
+    public UserRecord findByName(@PathVariable String name){
         return service.findByName(name);
     }
 
