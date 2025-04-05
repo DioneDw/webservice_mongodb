@@ -3,6 +3,7 @@ package com.example.webserviceMongodb.service;
 import com.example.webserviceMongodb.domain.User;
 import com.example.webserviceMongodb.domain.dto.UserRecord;
 import com.example.webserviceMongodb.repository.UserRepository;
+import com.example.webserviceMongodb.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,12 @@ public class UserService {
     }
 
     public UserRecord findById(String id){
-        User user = repository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
+        User user = repository.findById(id).orElseThrow(ObjectNotFoundException::new);
         return new UserRecord(user.getId(), user.getName(), user.getEmail());
     }
 
     public UserRecord findByName(String name){
-        User user = repository.findByName(name).orElseThrow(()-> new RuntimeException("User not found"));
+        User user = repository.findByName(name).orElseThrow(ObjectNotFoundException::new);
         return new UserRecord(user.getId(), user.getName(), user.getEmail());
     }
 }
