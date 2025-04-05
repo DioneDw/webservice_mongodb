@@ -4,10 +4,8 @@ import com.example.webserviceMongodb.domain.dto.UserRecord;
 import com.example.webserviceMongodb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -23,14 +21,25 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserRecord findById(@PathVariable String id){
-        return service.findById(id);
+    public ResponseEntity<UserRecord> findById(@PathVariable String id){
+        return ResponseEntity.ok().body(service.findById(id));
     }
 
     @GetMapping("/name/{name}")
-    public UserRecord findByName(@PathVariable String name){
-        return service.findByName(name);
+    public ResponseEntity<UserRecord> findByName(@PathVariable String name){
+        return ResponseEntity.ok().body(service.findByName(name));
     }
 
+    @PostMapping
+    public ResponseEntity<Void> create(@RequestBody UserRecord userRecord){
+        return ResponseEntity.created(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(service
+                        .create(userRecord)
+                        .id())
+                .toUri())
+                .build();
+    }
 
 }
