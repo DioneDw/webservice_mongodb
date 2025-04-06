@@ -32,10 +32,12 @@ public class Instantiation implements CommandLineRunner {
         User u1 = new User(null, "Maria","maria@gmail.com");
         User u2 = new User(null, "Alex Gray","alex@gmail.com");
         User u3 = new User(null, "Bob Gray","bob@gmail.com");
-        userRepository.saveAll(List.of(u1,u2,u3));
+        userRepository.save(u1);
+        userRepository.save(u2);
+        userRepository.save(u3);
 
-        Post post1 = new Post(null, LocalDate.parse("01/05/2025",dtf), "Partiu Viagem","Vou viajar para Porto Seguro", new AuthorRecord(u1.getId(),u1.getName()));
-        Post post2 = new Post(null, LocalDate.parse("02/05/2025",dtf), "Terminal lotado","Esperando para embarcar, fuiii!!!", new AuthorRecord(u1.getId(),u1.getName()))    ;
+        Post post1 = new Post(null, LocalDate.parse("01/05/2025",dtf), "Partiu Viagem","Vou viajar para Porto Seguro", AuthorRecord.fromUser(u1));
+        Post post2 = new Post(null, LocalDate.parse("02/05/2025",dtf), "Terminal lotado","Esperando para embarcar, fuiii!!!", AuthorRecord.fromUser(u1));
         postRepository.saveAll(List.of(post1,post2));
 
         u1.getPosts().addAll(List.of(post1,post2));

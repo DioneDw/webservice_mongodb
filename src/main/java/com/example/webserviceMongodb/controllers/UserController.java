@@ -1,5 +1,6 @@
 package com.example.webserviceMongodb.controllers;
 
+import com.example.webserviceMongodb.domain.dto.PostRecord;
 import com.example.webserviceMongodb.domain.dto.UserRecord;
 import com.example.webserviceMongodb.service.UserService;
 import jakarta.validation.Valid;
@@ -53,6 +54,11 @@ public class UserController {
     public ResponseEntity<Void> update(@PathVariable String id, @RequestBody @Valid UserRecord userRecord){
         service.update(id,userRecord);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<PostRecord>> findPosts(@PathVariable String id){
+        return ResponseEntity.ok().body(service.findById(id).posts());
     }
 
 }
