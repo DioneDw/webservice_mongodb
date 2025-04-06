@@ -23,4 +23,10 @@ public class PostController {
     public ResponseEntity<List<PostRecord>> findByTitle(@RequestParam(value="title") String text){
         return ResponseEntity.ok().body(service.findByTitle(text));
     }
+
+    @GetMapping("/titlesearchByQueryMDB")
+    public ResponseEntity<List<PostRecord>> searchByTitle(@RequestParam(value="title") String text){
+        return ResponseEntity.ok().body(service.searchByTitle(text));
+    }
+
 }

@@ -32,4 +32,8 @@ public class PostService {
         return postMapper.toRecordList(repository.findByTitleContainingIgnoreCase(text));
     }
 
+    public List<PostRecord> searchByTitle(String text){
+        return postMapper.toRecordList(repository.searchByTitle(text));
+    }
+
 }
