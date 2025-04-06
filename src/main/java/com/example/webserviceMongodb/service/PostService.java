@@ -9,6 +9,8 @@ import com.example.webserviceMongodb.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostService {
     @Autowired
@@ -21,10 +23,13 @@ public class PostService {
     private PostMapper postMapper;
 
 
-
     public PostRecord findById(String id){
         Post post = repository.findById(id).orElseThrow(ObjectNotFoundException::new);
         return postMapper.toRecord(post);
+    }
+
+    public List<PostRecord> findByTitle(String text){
+        return postMapper.toRecordList(repository.findByTitleContainingIgnoreCase(text));
     }
 
 }
