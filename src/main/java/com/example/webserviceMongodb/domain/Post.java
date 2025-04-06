@@ -1,5 +1,6 @@
 package com.example.webserviceMongodb.domain;
 
+import com.example.webserviceMongodb.domain.dto.AuthorRecord;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,5 @@ public class Post {
     private String title;
     private String body;
 
-    private User author;
+    private AuthorRecord author;
 }
